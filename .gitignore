@@ -1,3 +1,5 @@
 venv
 *.xml
 *.iml
+Pipfile
+Pipfile.lock
