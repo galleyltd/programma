@@ -6,8 +6,8 @@ RUN apt-get update && apt-get install -y \
 	gcc \
 	librdkafka1
 
-COPY requirements.txt ./
+COPY script.py .
+COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-
-#CMD [ "python", "./your-daemon-or-script.py" ]
+CMD [ "python", "script.py" ]
