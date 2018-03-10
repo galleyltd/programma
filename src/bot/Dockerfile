@@ -7,9 +7,8 @@ RUN apt-get update -y && apt-get install -y software-properties-common \
 	&& add-apt-repository "deb [arch=amd64] https://packages.confluent.io/deb/4.0 stable main" \
 	&& apt-get install -y librdkafka-dev librdkafka1
 
-COPY script.py .
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD [ "python", "script.py" ]
+COPY . .
+CMD python script.py
