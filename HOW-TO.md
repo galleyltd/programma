@@ -14,6 +14,3 @@ and then install the requirement in the virtual environment:
 Run docker by doing so:
 
 ```docker build -t my-python-app .```
-
-
-

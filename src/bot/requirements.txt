@@ -1,2 +1,3 @@
 confluent-kafka
 python-telegram-bot
+Flask
