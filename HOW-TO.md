@@ -11,6 +11,6 @@ and then install the requirement in the virtual environment:
 
 ### Docker way
 
-Run docker by doing so:
+Run docker by doing:
 
-```docker build -t my-python-app .```
+```docker-compose up --build```
