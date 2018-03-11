@@ -1,0 +1,10 @@
+version: '3'
+services:
+  bot:
+    build: src/bot
+    volumes:
+      - ./src/bot:/usr/src/app
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
+  # kafka:
+  #   image: wurstmeister/kafka
