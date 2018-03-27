@@ -3,8 +3,12 @@ services:
   bot:
     build: src/bot
     volumes:
-      - ./src/bot:/usr/src/app
+      - ./src/bot:/usr/src/programma/bot
     environment:
       - COMPOSE_CONVERT_WINDOWS_PATHS=1
-  # kafka:
-  #   image: wurstmeister/kafka
+  server:
+    build: src/server
+    volumes:
+      - ./src/server:/usr/src/programma/server
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
