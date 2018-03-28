@@ -8,6 +8,8 @@ services:
       - COMPOSE_CONVERT_WINDOWS_PATHS=1
   server:
     build: src/server
+    ports:
+      - "8080:80"
     volumes:
       - ./src/server:/usr/src/programma/server
     environment:

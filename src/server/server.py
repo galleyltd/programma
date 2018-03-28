@@ -4,7 +4,7 @@ import tornado.web
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello, world")
+        self.write("Hello, world!")
 
 
 class ErrorHandler(tornado.web.RequestHandler):
@@ -23,5 +23,5 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8888)
+    app.listen(80)
     tornado.ioloop.IOLoop.current().start()
