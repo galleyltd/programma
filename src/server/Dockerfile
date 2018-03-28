@@ -5,7 +5,7 @@ WORKDIR /usr/src/programma/server
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 80
+EXPOSE 8888
 
 COPY . .
 CMD python server.py
