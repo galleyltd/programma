@@ -1,0 +1,6 @@
+FROM python:3.6-alpine3.6
+WORKDIR /usr/src/
+COPY . .
+RUN pip install --no-cache-dir -r src/bot/requirements.txt
+ENV PYTHONPATH .
+CMD python src/bot/bot.py
