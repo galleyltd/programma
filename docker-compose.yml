@@ -1,16 +1,20 @@
 version: '3'
 services:
   bot:
-    build: src/bot
+    build:
+      context: .
+      dockerfile: Dockerfile-bot
     volumes:
-      - ./src/bot:/usr/src/programma/bot
+      - ./src:/usr/src/programma
     environment:
       - COMPOSE_CONVERT_WINDOWS_PATHS=1
   server:
-    build: src/server
+    build:
+      context: .
+      dockerfile: Dockerfile-server
     ports:
       - "8080:8888"
     volumes:
-      - ./src/server:/usr/src/programma/server
+      - ./src:/usr/src/programma
     environment:
       - COMPOSE_CONVERT_WINDOWS_PATHS=1

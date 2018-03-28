@@ -1,0 +1,7 @@
+FROM python:3.6-alpine3.6
+WORKDIR /usr/src/
+COPY . .
+RUN pip install --no-cache-dir -r src/server/requirements.txt
+EXPOSE 8888
+ENV PYTHONPATH .
+CMD python src/server/server.py

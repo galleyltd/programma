@@ -1,6 +1,8 @@
 import tornado.ioloop
 import tornado.web
 
+from src.common.TelegramMessage import TelegramMessage
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -15,6 +17,7 @@ class ErrorHandler(tornado.web.RequestHandler):
 
 
 def make_app():
+    tgMsg = TelegramMessage("fdsfds")
     return tornado.web.Application([
         (r"/", MainHandler),
         (r"/error", ErrorHandler)
