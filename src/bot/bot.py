@@ -1,7 +1,5 @@
 from telegram.ext import Updater, CommandHandler
 
-from src.common.TelegramMessage import TelegramMessage
-
 
 def hello(bot, update):
     update.message.reply_text(
@@ -10,7 +8,6 @@ def hello(bot, update):
 
 if __name__ == "__main__":
     print("hello galley")
-    message = TelegramMessage("hello galley")
     updater = Updater('YOUR TOKEN HERE')
     updater.dispatcher.add_handler(CommandHandler('hello', hello))
     updater.start_polling()
