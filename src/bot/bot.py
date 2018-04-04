@@ -1,14 +1,21 @@
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Job, Filters
 
 
-def hello(bot, update):
+def textMessageHandler(bot, update):
     update.message.reply_text(
-        'Hello {}'.format(update.message.from_user.first_name))
+        'Your message: {}'.format(update.message.from_user.first_name))
+
+def wtfCommandHandler(bot, update):
+    update.message.reply_text(
+        'WTF {}'.format(update.message.from_user.first_name))
 
 
 if __name__ == "__main__":
     print("hello galley")
-    updater = Updater('YOUR TOKEN HERE')
-    updater.dispatcher.add_handler(CommandHandler('hello', hello))
-    updater.start_polling()
+    updater = Updater('')
+
+    updater.dispatcher.add_handler(MessageHandler(Filters.text, textMessageHandler))
+    updater.dispatcher.add_handler(CommandHandler('wtf', wtfCommandHandler))
+    
+    updater.start_polling(clean=True)
     updater.idle()
