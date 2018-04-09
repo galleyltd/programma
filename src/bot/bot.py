@@ -8,7 +8,7 @@ def textMessageHandler(bot, update):
     try:
         message = UserMessage(update.message.text, update.message.from_user.first_name)
         print(json.dumps(message.__dict__))
-        requests.post('http://localhost:8888/messages',
+        requests.post('http://server:8888/messages',
                       data=json.dumps(message.__dict__))
     except Exception as inst:
         print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
