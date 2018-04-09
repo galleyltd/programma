@@ -8,6 +8,8 @@ import tornado.web
 from src.common.UserMessage import UserMessage
 from src.common.WtfCommandMessage import WtfCommandMessage
 
+fake_stats = {}
+
 
 class WtfHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
@@ -26,11 +28,8 @@ class AllMessagesHandler(tornado.web.RequestHandler):
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
         message = UserMessage(data["text"], data["username"])
+        fake_stats[message.text] = message.username
         self.set_status(200)
-
-fake_stats = {}
-fake_stats['hello'] = 10
-fake_stats['уебок'] = 322323
 
 
 class StatisticsHandler(tornado.web.RequestHandler):
@@ -40,6 +39,7 @@ class StatisticsHandler(tornado.web.RequestHandler):
     def get(self):
         self.write(json.dumps(fake_stats))
         self.set_status(200)
+
 
 def get_logger():
     logger = logging.getLogger("programma")

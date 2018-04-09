@@ -1,11 +1,19 @@
+import requests
+import json
+import sys
 from telegram.ext import Updater, CommandHandler, MessageHandler, Job, Filters
-
+from src.common.UserMessage import UserMessage
 
 def textMessageHandler(bot, update):
-    print(update.message.from_user.first_name)
-    #update.message.reply_text(
-    #    'Your message: {}'.format(update.message.from_user.first_name))
-
+    try:
+        message = UserMessage(update.message.text, update.message.from_user.first_name)
+        print(json.dumps(message.__dict__))
+        requests.post('http://localhost:8888/messages',
+                      data=json.dumps(message.__dict__))
+    except Exception as inst:
+        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
+        print(type(inst))  # the exception instance
+        print(inst.args)  # arguments stored in .args
 
 def wtfCommandHandler(bot, update):
     update.message.reply_text(
