@@ -1,5 +1,6 @@
 import logging
 import sys
+import json
 
 import tornado.ioloop
 import tornado.web
@@ -27,6 +28,18 @@ class AllMessagesHandler(tornado.web.RequestHandler):
         message = UserMessage(data["text"], data["username"])
         self.set_status(200)
 
+fake_stats = {}
+fake_stats['hello'] = 10
+fake_stats['уебок'] = 322323
+
+
+class StatisticsHandler(tornado.web.RequestHandler):
+    def __init__(self, application, request, **kwargs):
+        super().__init__(application, request, **kwargs)
+
+    def get(self):
+        self.write(json.dumps(fake_stats))
+        self.set_status(200)
 
 def get_logger():
     logger = logging.getLogger("programma")
@@ -45,7 +58,8 @@ def get_logger():
 def make_app():
     return tornado.web.Application([
         (r"/wtf", WtfHandler),
-        (r"/messages", AllMessagesHandler)
+        (r"/messages", AllMessagesHandler),
+        (r"/stats", StatisticsHandler)
     ])
 
 
