@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import logging
 import sys
 import json
@@ -28,6 +30,7 @@ class AllMessagesHandler(tornado.web.RequestHandler):
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
         message = UserMessage(data["text"], data["username"])
+
         fake_stats[message.text] = message.username
         self.set_status(200)
 
