@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import logging
@@ -9,6 +10,10 @@ import tornado.web
 
 from src.common.UserMessage import UserMessage
 from src.common.WtfCommandMessage import WtfCommandMessage
+
+from nltk.tokenize.stanford import CoreNLPTokenizer
+
+sttok = CoreNLPTokenizer('http://corenlp:9000')
 
 fake_stats = {}
 
@@ -29,9 +34,11 @@ class AllMessagesHandler(tornado.web.RequestHandler):
 
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
+        print(data)
         message = UserMessage(data["text"], data["username"])
-
-        fake_stats[message.text] = message.username
+        tokens = sttok.tokenize(message.text)
+        for token in tokens:
+            fake_stats[token] = fake_stats.get(token, 0) + 1
         self.set_status(200)
 
 
@@ -40,7 +47,8 @@ class StatisticsHandler(tornado.web.RequestHandler):
         super().__init__(application, request, **kwargs)
 
     def get(self):
-        self.write(json.dumps(fake_stats))
+        self.write(
+            json.dumps(sorted(fake_stats.items(), key=lambda x: x[1], reverse=True), ensure_ascii=False).encode('utf8'))
         self.set_status(200)
 
 

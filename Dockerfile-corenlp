@@ -1,0 +1,7 @@
+FROM openjdk:8-jre-alpine
+WORKDIR /usr/src/
+COPY . .
+# ADD http://nlp.stanford.edu/software/stanford-corenlp-full-2018-02-27.zip .
+RUN unzip stanford-corenlp-full-2018-02-27.zip && cd stanford-corenlp-full-2018-02-27
+# ADD http://nlp.stanford.edu/software/stanford-english-corenlp-2018-02-27-models.jar stanford-english-corenlp-2018-02-27-models.jar
+CMD java -mx4g -cp "/usr/src/stanford-corenlp-full-2018-02-27/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload tokenize,ssplit,pos,lemma,parse,depparse -status_port 9000 -port 9000 -timeout 15000

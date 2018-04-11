@@ -4,3 +4,4 @@ venv
 Pipfile
 Pipfile.lock
 __pycache__
+*.zip

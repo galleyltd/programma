@@ -18,3 +18,13 @@ services:
       - ./src:/usr/src/programma
     environment:
       - COMPOSE_CONVERT_WINDOWS_PATHS=1
+  corenlp:
+    build:
+      context: .
+      dockerfile: Dockerfile-corenlp
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./src:/usr/src/programma
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1

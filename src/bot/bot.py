@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import requests
@@ -9,9 +10,9 @@ from src.common.UserMessage import UserMessage
 def textMessageHandler(bot, update):
     try:
         message = UserMessage(update.message.text, update.message.from_user.first_name)
-        print(json.dumps(message.__dict__))
+        print(json.dumps(message.__dict__, ensure_ascii=False).encode('utf8'))
         requests.post('http://server:8888/messages',
-                      data=json.dumps(message.__dict__))
+                      data=json.dumps(message.__dict__, ensure_ascii=False).encode('utf8'))
     except Exception as inst:
         print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
         print(type(inst))  # the exception instance
@@ -24,7 +25,7 @@ def wtfCommandHandler(bot, update):
 
 if __name__ == "__main__":
     print("hello galley")
-    updater = Updater('')
+    updater = Updater('591252372:AAHgvXPc_pkCBS7oHXIKn1LC8E7wmX5-2bA')
 
     updater.dispatcher.add_handler(MessageHandler(Filters.text, textMessageHandler))
     updater.dispatcher.add_handler(CommandHandler('wtf', wtfCommandHandler))
