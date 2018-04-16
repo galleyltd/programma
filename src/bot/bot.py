@@ -4,6 +4,8 @@
 import requests
 import json
 import sys
+import os
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Job, Filters
 from src.common.UserMessage import UserMessage
 
@@ -20,12 +22,12 @@ def textMessageHandler(bot, update):
 
 def wtfCommandHandler(bot, update):
     update.message.reply_text(
-        'WTF {}'.format(update.message.from_user.first_name))
+        'WTF {}'.format(update.message.text))
 
 
 if __name__ == "__main__":
     print("hello galley")
-    updater = Updater('')
+    updater = Updater(os.environ['TelegramToken'])
 
     updater.dispatcher.add_handler(MessageHandler(Filters.text, textMessageHandler))
     updater.dispatcher.add_handler(CommandHandler('wtf', wtfCommandHandler))
