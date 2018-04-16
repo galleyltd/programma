@@ -25,7 +25,7 @@ def wtfCommandHandler(bot, update):
 
 if __name__ == "__main__":
     print("hello galley")
-    updater = Updater('591252372:AAHgvXPc_pkCBS7oHXIKn1LC8E7wmX5-2bA')
+    updater = Updater('')
 
     updater.dispatcher.add_handler(MessageHandler(Filters.text, textMessageHandler))
     updater.dispatcher.add_handler(CommandHandler('wtf', wtfCommandHandler))

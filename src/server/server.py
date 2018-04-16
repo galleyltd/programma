@@ -38,7 +38,7 @@ class AllMessagesHandler(tornado.web.RequestHandler):
         message = UserMessage(data["text"], data["username"])
         tokens = sttok.tokenize(message.text)
         for token in tokens:
-            fake_stats[token] = fake_stats.get(token, 0) + 1
+            fake_stats[token.lower()] = fake_stats.get(token.lower(), 0) + 1
         self.set_status(200)
 
 
