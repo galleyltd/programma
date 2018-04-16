@@ -5,8 +5,9 @@ import logging
 import sys
 import json
 
-import tornado.ioloop
+from tornado import gen, ioloop
 import tornado.web
+from motor.motor_tornado import MotorClient
 
 from src.common.UserMessage import UserMessage
 from src.common.WtfCommandMessage import WtfCommandMessage
@@ -17,11 +18,10 @@ sttok = CoreNLPTokenizer('http://corenlp:9000')
 
 fake_stats = {}
 
+client = MotorClient()
+
 
 class WtfHandler(tornado.web.RequestHandler):
-    def __init__(self, application, request, **kwargs):
-        super().__init__(application, request, **kwargs)
-
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
         wtf_command = WtfCommandMessage(data["word"], data["username"])
@@ -29,27 +29,26 @@ class WtfHandler(tornado.web.RequestHandler):
 
 
 class AllMessagesHandler(tornado.web.RequestHandler):
-    def __init__(self, application, request, **kwargs):
-        super().__init__(application, request, **kwargs)
-
-    def post(self):
+    async def post(self):
         data = tornado.escape.json_decode(self.request.body)
         print(data)
         message = UserMessage(data["text"], data["username"])
-        tokens = sttok.tokenize(message.text)
-        for token in tokens:
-            fake_stats[token.lower()] = fake_stats.get(token.lower(), 0) + 1
+        await store_word_usage_stats(message.username, message.text)
         self.set_status(200)
 
 
 class StatisticsHandler(tornado.web.RequestHandler):
-    def __init__(self, application, request, **kwargs):
-        super().__init__(application, request, **kwargs)
-
     def get(self):
         self.write(
             json.dumps(sorted(fake_stats.items(), key=lambda x: x[1], reverse=True), ensure_ascii=False).encode('utf8'))
         self.set_status(200)
+
+
+async def store_word_usage_stats(username, message):
+    tokens = sttok.tokenize(message)
+    for token in tokens:
+        fake_stats[token.lower()] = fake_stats.get(token.lower(), 0) + 1
+    await client.db.collection.update()
 
 
 def get_logger():
